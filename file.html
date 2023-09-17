@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WeatherAppi⛈️</title>
+    <link rel="stylesheet" href="Style.css">
+    <title>Weather App</title>
 </head>
 <body>
-    <h1>WeatherApp</h1>
+    <div class="weather-app">
+        <div class="location">
+            <input type="text" id="location-input" placeholder="Enter a location">
+            <button id="search-button">Search</button>
+        </div>
+        <div class="weather-info">
+            <h1 id="location-name"></h1>
+            <div id="temperature"></div>
+            <div id="weather-description"></div>
+            <img id="weather-icon" src="" alt="Weather Icon">
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
