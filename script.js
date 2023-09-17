@@ -1,41 +1,30 @@
-// Replace 'YOUR_API_KEY' with your actual API key from OpenWeatherMap
-const apiKey = 'YOUR_API_KEY';
-
-// Elements
-const locationInput = document.getElementById('location-input');
-const searchButton = document.getElementById('search-button');
-const locationName = document.getElementById('location-name');
-const temperature = document.getElementById('temperature');
-const weatherDescription = document.getElementById('weather-description');
-const weatherIcon = document.getElementById('weather-icon');
-
-// Event listener for the search button
-searchButton.addEventListener('click', () => {
-    const location = locationInput.value.trim();
-    if (location !== '') {
-        fetchWeatherData(location);
+document.getElementById("search-button").addEventListener("click", function() {
+    const locationInput = document.getElementById("location-input").value;
+    if (locationInput) {
+        fetchWeatherData(locationInput);
     }
 });
 
-// Function to fetch weather data from the API
-function fetchWeatherData(location) {
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${apiKey}`;
+function fetchWeatherData(city) {
+    // Replace with your weather API endpoint
+    const apiKey = "YOUR_API_KEY";
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
 
     fetch(apiUrl)
-        .then((response) => response.json())
-        .then((data) => {
-            displayWeatherData(data);
-        })
-        .catch((error) => {
-            console.error('Error fetching weather data:', error);
-        });
-}
+        .then(response => response.json())
+        .then(data => {
+            if (data.name && data.main && data.main.temp) {
+                const cityName = document.getElementById("city-name");
+                const temperature = document.getElementById("temperature");
 
-// Function to display weather data
-function displayWeatherData(data) {
-    locationName.textContent = data.name;
-    temperature.textContent = `${Math.round(data.main.temp)}°C`;
-    weatherDescription.textContent = data.weather[0].description;
-    const iconUrl = `http://openweathermap.org/img/w/${data.weather[0].icon}.png`;
-    weatherIcon.src = iconUrl;
+                cityName.textContent = data.name;
+                temperature.textContent = `Temperature: ${data.main.temp}°C`;
+            } else {
+                alert("City not found. Please try again.");
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching weather data:", error);
+            alert("An error occurred. Please try again later.");
+        });
 }
